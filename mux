@@ -1,0 +1,22 @@
+entity mux is
+    Port ( i : in STD_LOGIC_VECTOR ( 3 downto 0);
+           y : out STD_LOGIC;
+           s : in STD_LOGIC_VECTOR (1 downto 0));
+end mux;
+
+architecture Behavioral of mux is
+
+begin
+process(i,s)
+begin
+if(s<="00") then
+  y<= i(0);
+  
+ elsif(s<="01") then
+   y<= i(1);
+   elsif(s<="10") then
+      y<= i(2);
+      else
+         y<= i(3);
+       end if;
+   end process;
