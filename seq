@@ -1,0 +1,54 @@
+module detect(
+    input clk,
+    input rst,
+    input in,
+    output reg out
+    );
+    parameter s1=2'b00,s2=2'b01,s3=2'b10;
+    reg state;
+    always @(posedge clk)
+    begin
+    if(!rst)
+    begin
+    out<=1'b0;
+    state<=s1;
+    end
+    else
+    begin
+    case(state)
+    s1:if(in==1)
+       begin
+       state<=s2;
+       out<=0;
+       end
+       else
+       begin
+       state<=s1;
+       out<=0;
+       end
+    s2:if(in==1'b1)
+          begin
+          state<=s3;
+          out<=1;
+          end
+          else
+          begin
+          state<=s1;
+          out<=0;
+          end
+    s3:if(in==0)
+             begin
+             state<=s1;
+             out<=1;
+             end
+             else
+             begin
+             state<=s1;
+             out<=0;
+             end
+     endcase
+     end
+     end
+       
+    
+endmodule
