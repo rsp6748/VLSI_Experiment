@@ -1,0 +1,38 @@
+module sequ(
+    input clk,
+    input reset,
+    input data,
+    output reg detected
+    );
+reg [1:0] state;
+    parameter S0 = 2'b00, S1 = 2'b01, S2 = 2'b10, S3 = 2'b11;
+    parameter SEQ = 4'b1100;
+
+    always @(posedge clk, negedge reset) begin
+        if (!reset) begin
+            state <= S0;
+            detected <= 0;
+        end
+        else begin
+            case (state)
+                S0: if (data == 1'b1) begin state <= S1;
+           detected <= 0; end
+                    else state <= S0;
+                S1: if (data == 1'b1) begin state <= S2;
+           detected <= 0; end
+                    else state <= S0;
+                S2: if (data == 1'b0) begin state <= S3;
+           detected <= 0; end
+                    else state <= S0;
+                S3: if (data == 1'b0) begin
+                        state <= S0;
+                        detected <= 1;
+                    end
+                    else state <= S0;
+                default: state <= S0;
+            endcase
+        end
+    end
+
+
+endmodule
